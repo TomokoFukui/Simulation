@@ -13,6 +13,8 @@ namespace 不平等の自然発生シミュレーション
 
         private void FormOperation_Load(object sender, EventArgs e)
         {
+            labelCaption.Text = "平等な初期状態からランダムに行動すると"+ Environment.NewLine + "偏りが生じた状態で安定するという事象をシミュレートします。";
+
             buttonStart.Enabled = true;
             buttonStop.Enabled = false;
         }
@@ -22,12 +24,16 @@ namespace 不平等の自然発生シミュレーション
             buttonStart.Enabled = false;
             buttonStop.Enabled = true;
 
-            Task.Run(() => RunSimulation());
+            int population = int.Parse(textBoxPopulation.Text);
+            long blance = int.Parse(textBoxBlance.Text) * 10000;
+            int pay = int.Parse(textBoxPay.Text);
+            Task.Run(() => RunSimulation(population, blance, pay));
         }
 
-        private void RunSimulation()
+        private void RunSimulation(int population, long balance, int pay)
         {
             FormChart formChart = new FormChart();
+            formChart.SetParameters(population, balance, pay);
             formChart.Show();
             formChart.DoWork();
         }
